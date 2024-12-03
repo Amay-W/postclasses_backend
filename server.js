@@ -124,11 +124,24 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
     );
 });
 
-// // Start the server
-// const PORT = app.get('port');
-// app.listen(PORT, () => {
-//     console.log(`Server is running on http://localhost:${PORT}`);
-// });
+
+app.get('/search/:collectionName', (request, response, next) => {
+    const searchTerm = request.query.q || ""; // Get the search term
+    const searchRegex = new RegExp(searchTerm, "i"); // Case-insensitive regex for substring matching
+
+    const query = {
+        $or: [
+            { title: searchRegex },
+            { location: searchRegex },
+        ]
+    }
+    request.collection.find(query).toArray((err, results) => {
+        if (err) return next(err); // Handle errors
+        response.send(results);    // Send the filtered results
+    });
+})
+
+
 
 
 
