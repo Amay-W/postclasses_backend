@@ -134,6 +134,10 @@ app.get('/search/:collectionName', (req, res, next) => {
         $or: [
             { title: searchRegex },
             { location: searchRegex },
+            { price: { $regex: searchRegex } }, // Match price as a string using regex
+            { availableSeats: { $regex: searchRegex } }, // Match spaces/availability as a string using regex
+            { description: searchRegex },
+
         ],
     };
 
