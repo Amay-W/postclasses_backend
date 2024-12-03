@@ -25,6 +25,15 @@ app.use(logger);
 // app.use('/assets', express.static(path.resolve(__dirname, "assets")));
 
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
 
 
 var imagePath = path.resolve(__dirname, "assets");
@@ -79,6 +88,12 @@ app.get('/collection/:collectionName', (req, res, next) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.send('Select a collection, e.g., /collection/lessons');
+});
+
+
+
 // Add a document to a collection
 app.post('/collection/:collectionName', (req, res, next) => {
     req.collection.insertOne(req.body, (e, result) => {
@@ -87,13 +102,14 @@ app.post('/collection/:collectionName', (req, res, next) => {
     });
 });
 
-// Retrieve a document by ID
+// return with object id
+const ObjectID = require('mongodb').ObjectID;
 app.get('/collection/:collectionName/:id', (req, res, next) => {
-    req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
-        if (e) return next(e);
-        res.send(result);
-    });
-});
+    req.collection.findOne({ _id: ObjectID(req.params.id) }, (e, result) => {
+        if (e) return next(e)
+        res.send(result)
+    })
+})
 
 // Update a document by ID
 app.put('/collection/:collectionName/:id', (req, res, next) => {
@@ -108,9 +124,16 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
     );
 });
 
-// Start the server
-const PORT = app.get('port');
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// // Start the server
+// const PORT = app.get('port');
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+// });
 
+
+
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log("Express.js server running at localhost:${port}");
+});
