@@ -125,21 +125,28 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
 });
 
 
-app.get('/search/:collectionName', (request, response, next) => {
-    const searchTerm = request.query.q || ""; // Get the search term
+app.get('/search/:collectionName', (req, res, next) => {
+    const searchTerm = req.query.q || ""; // Get the search term from the query string
     const searchRegex = new RegExp(searchTerm, "i"); // Case-insensitive regex for substring matching
 
+    // Build the search query
     const query = {
         $or: [
             { title: searchRegex },
             { location: searchRegex },
-        ]
-    }
-    request.collection.find(query).toArray((err, results) => {
-        if (err) return next(err); // Handle errors
-        response.send(results);    // Send the filtered results
+        ],
+    };
+
+    // Execute the search on the collection
+    req.collection.find(query).toArray((err, results) => {
+        if (err) {
+            console.error("Error executing search query:", err);
+            return next(err); // Handle errors
+        }
+        res.send(results); // Send the filtered results
     });
-})
+});
+
 
 
 
