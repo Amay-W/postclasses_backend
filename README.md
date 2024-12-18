@@ -1,7 +1,6 @@
 # 🛠️ PostClasses Backend - Amay W
 
-Welcome to the **PostClasses Backend**, the server-side implementation of the PostClasses project. This backend supports the management of after-school classes and order data, seamlessly integrating with the 
-[PostClasses Frontend] (https://github.com/Amay-W/postclasses_frontend).
+Welcome to the **PostClasses Backend**, the server-side implementation of the PostClasses project. This backend supports the management of after-school classes and order data, seamlessly integrating with the **PostClasses Frontend**.
 
 
 
