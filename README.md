@@ -8,7 +8,7 @@ https://github.com/user-attachments/assets/e119f946-1f49-49eb-8a7c-8918994c17b4
 
 
 
-**Please go to the front-end repo to see more details for this project‼️**
+**‼️Please go to the front-end repo to see more details for this project‼️**
 ---
 
 ## 📌 Links to Project Resources
